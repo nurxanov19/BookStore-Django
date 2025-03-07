@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<form>
+  <input type="text" name="q" placeholder="Search">
+  <button type="submit">Search</button>
+</form>
+
+{% if book %}
+    <h2>Result:</h2>
+    <div class="container">
+        {% for b in book %}
+        <div class="books-card">
+            <a href="/book-detail/{{ b.pk }}" class="book-image">
+                {% if b.image %}
+                <img src="{{ b.image.url }}" alt="{{ b.title }} {{ b.company }}">
+                {% else %}
+                <img src="placeholder.jpg" alt="Placeholder">
+                {% endif %}
+            </a>
+            <div class="medicine-detail">
+                <h2>{{ b.title }} ({{ b.author_name }} {{ b.author_last_name }})</h2>
+                <p><strong>Year:</strong> {{ b.year }}</p>
+                <p><strong>Quantity:</strong> {{ b.quantity }}</p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{%else%}
+    <h2>No result</h2>
+{% endif %}
+
+</body>
+</html>

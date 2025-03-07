@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book list</title>
+</head>
+<body>
+<h1>List of Book</h1>
+<a href="{% url 'book-search' %}">Search</a>
+<div class="container">
+        {% for book in books %}
+        <div class="books-card">
+            <a href="/book-detail/{{ book.pk }}" class="book-image">
+                {% if book.image %}
+                <img src="{{ book.image.url }}" alt="{{ book.title }} {{ book.company }}">
+                {% else %}
+                <img src="placeholder.jpg" alt="Placeholder">
+                {% endif %}
+            </a>
+            <div class="medicine-detail">
+                <h2>{{ book.title }} ({{ book.author_name }} {{ book.author_last_name }})</h2>
+                <p><strong>Year:</strong> {{ book.year }}</p>
+                <p><strong>Quantity:</strong> {{ book.quantity }}</p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<a href="{% url 'book-create' %}">Create Book</a><br>
+<a href=" {% url 'home-page' %}">Back</a>
+</body>
+</html>
