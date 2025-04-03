@@ -23,7 +23,9 @@ from .settings import MEDIA_ROOT, MEDIA_URL
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('books.urls'))
+    path('', include('books.urls')),
+    path('account/', include('account.urls'))
+
 ]
 
 if settings.DEBUG:

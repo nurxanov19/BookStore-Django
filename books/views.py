@@ -6,7 +6,35 @@ from django.urls import reverse_lazy
 from .models import Books
 from .forms import BookForm
 from django.views import View
+
+from .serializers import BookSerializer
+from rest_framework import generics
+from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView
 # Create your views here.
+
+class BookListApi(generics.ListAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookCreateApi(CreateAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookDestroyApi(DestroyAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+
+
+class BookUpdateApi(UpdateAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+
+
+
 
 def home_page(request):
     return render(request, 'home.html')
