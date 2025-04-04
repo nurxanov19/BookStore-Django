@@ -9,30 +9,41 @@ from django.views import View
 
 from .serializers import BookSerializer
 from rest_framework import generics
-from rest_framework.generics import ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView
+# from rest_framework.generics import (ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView,
+#                                      ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView)
 # Create your views here.
 
-class BookListApi(generics.ListAPIView):
-    queryset = Books.objects.all()
-    serializer_class = BookSerializer
-
-
-class BookCreateApi(CreateAPIView):
-    queryset = Books.objects.all()
-    serializer_class = BookSerializer
-
-
-class BookDestroyApi(DestroyAPIView):
-    queryset = Books.objects.all()
-    serializer_class = BookSerializer
-    lookup_field = 'pk'
-
-
-class BookUpdateApi(UpdateAPIView):
-    queryset = Books.objects.all()
-    serializer_class = BookSerializer
-    lookup_field = 'pk'
-
+# class BookListApi(generics.ListAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#
+#
+# class BookCreateApi(CreateAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#
+#
+# class BookDestroyApi(DestroyAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#     lookup_field = 'pk'
+#
+#
+# class BookUpdateApi(UpdateAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#     lookup_field = 'pk'
+#
+#
+# class BookListCreate(ListCreateAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#
+#
+# class BookRetrieveDestroy(RetrieveUpdateDestroyAPIView):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#     lookup_field = 'pk'
 
 
 
@@ -114,3 +125,12 @@ class BookSearch(View):
 #         query = request.GET.get('q', None)
 #         book = Books.objects.annotate(SearchVector('year', 'title', 'author_name')) if query else Books.objects.none()
 #         return render(request, 'webpages/book_search.html', {'book': book})
+
+
+from rest_framework import viewsets
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+

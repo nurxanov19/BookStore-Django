@@ -11,6 +11,7 @@ class Books(models.Model):
     edited_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='book_image/', default='default.png', blank=True, null=True)
 
+
     class Meta:
         verbose_name = 'books'
 
