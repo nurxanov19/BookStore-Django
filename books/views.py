@@ -2,48 +2,51 @@ from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from rest_framework.permissions import IsAdminUser
 
 from .models import Books
 from .forms import BookForm
 from django.views import View
 
 from .serializers import BookSerializer
-from rest_framework import generics
-# from rest_framework.generics import (ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView,
-#                                      ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView)
-# Create your views here.
+from rest_framework import generics, permissions
+from rest_framework.generics import (ListAPIView, DestroyAPIView, UpdateAPIView, CreateAPIView,
+                                     ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView)
+from .permissions import IsOwnerOrReadOnly
 
-# class BookListApi(generics.ListAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#
-#
-# class BookCreateApi(CreateAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#
-#
-# class BookDestroyApi(DestroyAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#     lookup_field = 'pk'
-#
-#
-# class BookUpdateApi(UpdateAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#     lookup_field = 'pk'
-#
-#
-# class BookListCreate(ListCreateAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#
-#
-# class BookRetrieveDestroy(RetrieveUpdateDestroyAPIView):
-#     queryset = Books.objects.all()
-#     serializer_class = BookSerializer
-#     lookup_field = 'pk'
+class BookListApi(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookCreateApi(CreateAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookDestroyApi(DestroyAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+
+
+class BookUpdateApi(UpdateAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+
+
+class BookListCreate(ListCreateAPIView):
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookRetrieveDestroy(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser, ]
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
 
 
 
@@ -127,10 +130,10 @@ class BookSearch(View):
 #         return render(request, 'webpages/book_search.html', {'book': book})
 
 
-from rest_framework import viewsets
-
-class BookViewSet(viewsets.ModelViewSet):
-    queryset = Books.objects.all()
-    serializer_class = BookSerializer
-    lookup_field = 'pk'
+# from rest_framework import viewsets
+#
+# class BookViewSet(viewsets.ModelViewSet):
+#     queryset = Books.objects.all()
+#     serializer_class = BookSerializer
+#     lookup_field = 'pk'
 
